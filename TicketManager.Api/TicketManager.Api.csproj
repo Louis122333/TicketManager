@@ -24,11 +24,8 @@
     <ProjectReference Include="..\ticketmanager.client\ticketmanager.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\TicketManager.Contracts\TicketManager.Contracts.csproj" />
     <ProjectReference Include="..\TicketManager.Infrastructure\TicketManager.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
