@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using TicketManager.Domain.Aggregates.Users.Enum;
+using TicketManager.Domain.Aggregates.Users.Enums;
 using TicketManager.Domain.Aggregates.Users.Validators;
 using TicketManager.Domain.Aggregates.Users.ValueObjects;
 using TicketManager.Domain.Common.Models;

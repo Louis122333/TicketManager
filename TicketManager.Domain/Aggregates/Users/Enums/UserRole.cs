@@ -1,4 +1,4 @@
-﻿namespace TicketManager.Domain.Aggregates.Users.Enum
+﻿namespace TicketManager.Domain.Aggregates.Users.Enums
 {
     public enum UserRole
     {
