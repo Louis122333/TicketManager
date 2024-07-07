@@ -1,30 +1,51 @@
+using TicketManager.Api;
+using TicketManager.Application;
+using TicketManager.Domain.Aggregates.Users.Interfaces;
+using TicketManager.Infrastructure;
+using TicketManager.Infrastructure.Persistence.Data;
+using TicketManager.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    builder.Services
+         .AddPresentation()
+         .AddApplication()
+         .AddInfrastructure(builder.Configuration);
+
+    builder.Services.AddEndpointsApiExplorer();
 }
 
-app.UseHttpsRedirection();
+var app = builder.Build();
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var dbContext = services.GetRequiredService<TicketManagerDbContext>();
 
-app.UseAuthorization();
+        dbContext.Database.EnsureCreated();
 
-app.MapControllers();
+        var userRepository = services.GetRequiredService<IUserRepository>();
+        var dataSeeder = services.GetRequiredService<DataSeeder>();
 
-app.MapFallbackToFile("/index.html");
+        if (!dbContext.Users.Any())
+        {
+            await dataSeeder.SeedAsync();
+        }
+    }
 
-app.Run();
+    app.UseExceptionHandler("/error");
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
+    app.MapFallbackToFile("/index.html");
+    app.Run();
+}
