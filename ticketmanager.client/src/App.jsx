@@ -1,49 +1,59 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import MyPage from './pages/MyPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage'; 
+import CreateTicketPage from './pages/CreateTicketPage';
+import TicketDetailPage from './pages/TicketDetailPage';
+import PrivateRoute from './components/PrivateRoute';
+import AuthRoute from './components/AuthRoute';
+import NavBar from './components/NavBar';
+import { useAuth } from './contexts/AuthContext';
 import './App.css';
 
-function App() {
-    const [forecasts, setForecasts] = useState();
-
-    useEffect(() => {
-        populateWeatherData();
-    }, []);
-
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tabelLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
+const App = () => {
+    const { isAuthenticated } = useAuth(); // Get authentication status
 
     return (
         <div>
-            <h1 id="tabelLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
+            <NavBar /> {/* Ensure NavBar is always visible */}
+            <Routes>
+                <Route path="/login" element={
+                    <AuthRoute>
+                        <LoginPage />
+                    </AuthRoute>
+                } />
+                <Route path="/register" element={
+                    <AuthRoute>
+                        <RegisterPage />
+                    </AuthRoute>
+                } />
+                <Route path="/my-page" element={
+                    <PrivateRoute requiredRoles={['Administrator', 'HelpDesk', 'Guest']}>
+                        <MyPage />
+                    </PrivateRoute>
+                } />
+                <Route path="/dashboard" element={
+                    <PrivateRoute requiredRoles={['Administrator', 'HelpDesk']}>
+                        <DashboardPage />
+                    </PrivateRoute>
+                } />
+                <Route path="/create-ticket" element={
+                    <PrivateRoute requiredRoles={['Administrator', 'HelpDesk', 'Guest']}>
+                        <CreateTicketPage />
+                    </PrivateRoute>
+                } />
+                <Route path="/tickets/:ticketId" element={
+                    <PrivateRoute requiredRoles={['Administrator', 'HelpDesk', 'Guest']}>
+                        <TicketDetailPage />
+                    </PrivateRoute>
+                } />
+                <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
         </div>
     );
-    
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
-    }
-}
+};
 
 export default App;
