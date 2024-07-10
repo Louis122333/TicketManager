@@ -12,7 +12,17 @@ namespace TicketManager.Api
             services.AddMappings();
             services.AddControllers();
             services.AddSingleton<ProblemDetailsFactory, TicketManagerProblemDetailsFactory>();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });

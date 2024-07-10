@@ -36,13 +36,15 @@ var app = builder.Build();
     app.UseExceptionHandler("/error");
     app.UseDefaultFiles();
     app.UseStaticFiles();
+    app.UseRouting();
 
     if (app.Environment.IsDevelopment())
     {
+        app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI();
     }
-
+    app.UseCors("AllowAllOrigins");
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();
