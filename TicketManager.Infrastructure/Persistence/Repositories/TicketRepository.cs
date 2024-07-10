@@ -31,7 +31,12 @@ namespace TicketManager.Infrastructure.Persistence.Repositories
 
         public async Task<IReadOnlyList<Ticket>> GetAllAsync()
         {
-            return await _context.Tickets.AsNoTracking().ToListAsync();
+            return await _context.Tickets
+                .AsNoTracking()
+                .OrderByDescending(t => t.Priority == TicketPriority.High)
+                .ThenByDescending(t => t.Priority == TicketPriority.Medium)
+                .ThenByDescending(t => t.Priority == TicketPriority.Low)
+                .ToListAsync();
         }
 
         public async Task<IReadOnlyList<Ticket>> GetByUserIdAsync(UserId userId)
@@ -64,6 +69,16 @@ namespace TicketManager.Infrastructure.Persistence.Repositories
                 .Where(t => t.Status == status)
                 .ToListAsync();
         }
+
+
+        public async Task<IReadOnlyList<Ticket>?> GetByAssignedUserIdAsync(UserId userId)
+        {
+            return await _context.Tickets
+                .Where(t => t.AssignedTo == userId)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
 
         public async Task<Ticket> UpdatePriorityAsync(Ticket ticket, TicketPriority ticketPriority)
         {
