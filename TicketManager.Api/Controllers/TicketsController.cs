@@ -10,6 +10,8 @@ using TicketManager.Application.Tickets.Commands.CreateTicket;
 using TicketManager.Application.Tickets.Commands.UpdateTicketPriority;
 using TicketManager.Application.Tickets.Commands.UpdateTicketStatus;
 using TicketManager.Application.Tickets.Queries.GetAllTickets;
+using TicketManager.Application.Tickets.Queries.GetTicketById;
+using TicketManager.Application.Tickets.Queries.GetTicketsAssigned;
 using TicketManager.Application.Tickets.Queries.GetTicketsByStatus;
 using TicketManager.Application.Tickets.Queries.GetTicketsByType;
 using TicketManager.Application.Tickets.Queries.GetTicketsByUserId;
@@ -43,6 +45,19 @@ namespace TicketManager.Api.Controllers
 
             return result.Match(
                 tickets => Ok(_mapper.Map<IReadOnlyList<TicketDetailedResponse>>(tickets)),
+                Problem);
+        }
+
+        [Authorize(Roles = "Guest, Administrator, HelpDesk")]
+        [HttpGet("{ticketId}/details")]
+        public async Task<IActionResult> GetTicketById(Guid ticketId)
+        {
+            var query = new GetTicketByIdQuery(ticketId);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                ticket => Ok(_mapper.Map<TicketDetailedResponse>(ticket)),
                 Problem);
         }
 
@@ -95,6 +110,28 @@ namespace TicketManager.Api.Controllers
                 tickets => Ok(_mapper.Map<IReadOnlyList<TicketDetailedResponse>>(tickets)),
                 Problem);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = "Administrator, HelpDesk")]
+        [HttpGet("assigned")]
+        public async Task<IActionResult> GetAssignedTickets()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized("User ID is missing or invalid.");
+            }
+
+            var query = new GetTicketsAssignedToUserQuery(userId);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                tickets => Ok(_mapper.Map<IReadOnlyList<TicketDetailedResponse>>(tickets)),
+                Problem);
+        }
+
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("my")]

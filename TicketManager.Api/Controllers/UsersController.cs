@@ -2,9 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TicketManager.Application.Tickets.Queries.GetTicketById;
 using TicketManager.Application.Users.Commands.Create;
 using TicketManager.Application.Users.Commands.Update;
 using TicketManager.Application.Users.Queries.GetAllUsers;
+using TicketManager.Application.Users.Queries.GetUserById;
 using TicketManager.Contracts.Users.Requests;
 using TicketManager.Contracts.Users.Responses;
 using TicketManager.Domain.Aggregates.Users.Enums;
@@ -32,6 +34,20 @@ namespace TicketManager.Api.Controllers
 
             return result.Match(
                 users => Ok(_mapper.Map<IReadOnlyList<UserResponse>>(users)),
+                Problem);
+        }
+
+
+        [Authorize(Roles = "Guest, Administrator, HelpDesk")]
+        [HttpGet("{userid}")]
+        public async Task<IActionResult> GetUserById(Guid userId)
+        {
+            var query = new GetUserByIdQuery(userId);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                user => Ok(_mapper.Map<UserResponse>(user)),
                 Problem);
         }
 
