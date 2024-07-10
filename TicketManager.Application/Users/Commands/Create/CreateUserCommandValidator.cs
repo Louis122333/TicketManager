@@ -9,12 +9,14 @@ namespace TicketManager.Application.Users.Commands.Create
             RuleFor(x => x.FirstName)
                .NotEmpty()
                .MinimumLength(2)
-               .MaximumLength(50);
+               .MaximumLength(50)
+               .Must(StartWithUppercase).WithMessage("First name must start with an uppercase letter.");
 
             RuleFor(x => x.LastName)
                 .NotEmpty()
                 .MinimumLength(2)
-                .MaximumLength(50);
+                .MaximumLength(50)
+                .Must(StartWithUppercase).WithMessage("Last name must start with an uppercase letter.");
 
             RuleFor(x => x.Email)
                 .EmailAddress()
@@ -27,6 +29,15 @@ namespace TicketManager.Application.Users.Commands.Create
 
             RuleFor(x => x.Role)
                 .NotEmpty();
+        }
+        private bool StartWithUppercase(string nameProperty)
+        {
+            if (string.IsNullOrEmpty(nameProperty))
+            {
+                return false;
+            }
+
+            return char.IsUpper(nameProperty[0]);
         }
     }
 }
