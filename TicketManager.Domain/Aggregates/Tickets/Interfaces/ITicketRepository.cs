@@ -72,6 +72,16 @@ namespace TicketManager.Domain.Aggregates.Tickets.Interfaces
         Task<IReadOnlyList<Ticket>> GetByTypeAsync(TicketType type);
 
         /// <summary>
+        /// Retrieves tickets assigned to a specific user asynchronously.
+        /// </summary>
+        ///<param name="userId">The unique identifier of the user.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation.
+        /// The task result contains a read-only list of tickets assigned to the specific user, otherwise null.
+        /// </returns>
+        Task<IReadOnlyList<Ticket>?> GetByAssignedUserIdAsync(UserId userId);
+
+        /// <summary>
         /// Updates the status of a ticket asynchronously.
         /// </summary>
         /// <param name="ticket">The ticket to update.</param>

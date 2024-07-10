@@ -74,6 +74,7 @@ namespace TicketManager.Domain.Aggregates.Tickets
                 DateTime.UtcNow,
                 DateTime.UtcNow);
         }
+      
 
         public ErrorOr<Ticket> AssignToUser(UserId assignedTo)
         {
