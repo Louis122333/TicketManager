@@ -8,12 +8,11 @@
 
 #root {
     width: 100%;
-    margin-bottom: 2rem;
     text-align: center;
 }
 
 tr:nth-child(even) {
-    background: #F2F2F2;
+    background: #F2FDFF
 }
 
 tr:nth-child(odd) {
