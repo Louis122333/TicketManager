@@ -20,6 +20,12 @@ namespace TicketManager.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddRangeAsync(IReadOnlyList<User> users)
+        {
+            await _context.Users.AddRangeAsync(users);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IReadOnlyList<User>> GetAllAsync()
         {
             return await _context.Users.AsNoTracking().ToListAsync();

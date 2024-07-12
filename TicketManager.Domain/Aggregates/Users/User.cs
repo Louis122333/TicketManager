@@ -81,24 +81,8 @@ namespace TicketManager.Domain.Aggregates.Users
             return user;
         }
 
-        public ErrorOr<User> Update(
-        string firstName,
-        string lastName,
-        string email,
-        string password,
-        UserRole role)
+        public ErrorOr<User> Update(UserRole role)
         {
-            var errors = UserValidator.Validate(firstName, lastName, email, password);
-
-            if (errors.Count > 0)
-            {
-                return errors;
-            }
-
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Password = password;
             Role = role;
 
             return this;
