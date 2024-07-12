@@ -20,12 +20,7 @@ namespace TicketManager.Application.Tickets.Queries.GetTicketsAssigned
         {
             var tickets = await _ticketRepository.GetByAssignedUserIdAsync(UserId.Create(query.UserId));
 
-            if (tickets is null || !tickets.Any())
-            {
-                return Errors.Validation.NotFound("No tickets found assigned to the user.");
-            }
-
-            return tickets.ToList();
+            return tickets?.ToList() ?? new();
         }
     }
 }
