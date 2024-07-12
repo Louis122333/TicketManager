@@ -11,7 +11,6 @@ namespace TicketManager.Domain.Aggregates.Users.Interfaces
         /// <returns>A task representing the asynchronous operation.</returns>
         Task AddAsync(User user);
 
-
         Task AddRangeAsync(IReadOnlyList<User> users);
 
         /// <summary>

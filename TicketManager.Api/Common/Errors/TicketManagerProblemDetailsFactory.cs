@@ -100,7 +100,6 @@ namespace TicketManager.Api.Common.Errors
             {
                 problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code));
             }
-
         }
     }
 }

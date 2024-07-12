@@ -3,7 +3,6 @@ using MediatR;
 using TicketManager.Domain.Aggregates.Tickets;
 using TicketManager.Domain.Aggregates.Tickets.Interfaces;
 using TicketManager.Domain.Aggregates.Users.ValueObjects;
-using TicketManager.Domain.Common.Errors;
 
 namespace TicketManager.Application.Tickets.Queries.GetTicketsAssigned
 {

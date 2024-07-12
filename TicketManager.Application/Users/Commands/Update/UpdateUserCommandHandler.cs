@@ -1,6 +1,5 @@
 ﻿using ErrorOr;
 using MediatR;
-using TicketManager.Application.Common.Interfaces.Authentication;
 using TicketManager.Domain.Aggregates.Users;
 using TicketManager.Domain.Aggregates.Users.Enums;
 using TicketManager.Domain.Aggregates.Users.Interfaces;
