@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container, Grid, CircularProgress, Typography, Box, useTheme } from '@mui/material';
+import { Button, Container, Grid, CircularProgress, Typography, Box } from '@mui/material';
 import CreatedTicketsTable from '../components/tickets/CreatedTicketsTable';
 import AssignedTicketsTable from '../components/tickets/AssignedTicketsTable';
 import useUserTickets from '../hooks/tickets/useUserTickets';
@@ -9,11 +9,11 @@ import { useAuth } from '../contexts/AuthContext';
 
 const MyPage = () => {
     const { tickets, loading: userTicketsLoading, error: userTicketsError } = useUserTickets();
+
     const { roles, user } = useAuth();
-    const theme = useTheme();
 
     const isAdminOrHelpDesk = roles.includes('Administrator') || roles.includes('HelpDesk');
-
+    
     const { tickets: assignedTickets = [], loading: assignedTicketsLoading } = isAdminOrHelpDesk
         ? useAssignedTickets()
         : { tickets: [], loading: false, error: null };
@@ -23,15 +23,15 @@ const MyPage = () => {
 
     return (
         <Container maxWidth="lg">
-            <Box sx={{ mb: 4, mt: 4 }}>
+            <Box sx={{ mb: 4, mt: 8 }}>
                 <Typography variant="h4" component="h1" gutterBottom>Welcome, {user?.firstName || 'User'}!</Typography>
             </Box>
             <Box sx={{ mb: 8, mt: 8 }}>
-                <Button component={Link} to="/create-ticket" variant="contained" sx={{ mr: 2, backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>
+                <Button component={Link} to="/create-ticket" variant="contained" sx={{ mr: 2 }}>
                     Create New Ticket
                 </Button>
                 {isAdminOrHelpDesk && (
-                    <Button component={Link} to="/dashboard" variant="contained" sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>
+                    <Button component={Link} to="/dashboard" variant="contained">
                         Go To Dashboard
                     </Button>
                 )}

@@ -1,10 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, useTheme } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 const CreatedTicketsTable = ({ tickets }) => {
     const navigate = useNavigate();
-    const theme = useTheme();
 
     const handleRowClick = (id) => {
         navigate(`/tickets/${id}/created-tickets`);
@@ -14,10 +13,10 @@ const CreatedTicketsTable = ({ tickets }) => {
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: theme.palette.primary.dark }}>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Number</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Title</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Status</TableCell>
+                    <TableRow>
+                        <TableCell>Number</TableCell>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Status</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

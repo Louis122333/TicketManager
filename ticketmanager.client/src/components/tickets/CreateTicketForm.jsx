@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, TextField, Button, Typography, Box, MenuItem, Grid, Paper, useTheme } from '@mui/material';
 
-
 const CreateTicketForm = ({ onCreate }) => {
     const validationSchema = Yup.object({
         title: Yup.string()
@@ -51,6 +50,9 @@ const CreateTicketForm = ({ onCreate }) => {
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.title && Boolean(formik.errors.title)}
                                     helperText={formik.touched.title && formik.errors.title}
+                                    InputProps={{
+                                        style: { backgroundColor: '#F2FDFF' },
+                                    }}
                                 />
                                 <TextField
                                     fullWidth
@@ -66,6 +68,9 @@ const CreateTicketForm = ({ onCreate }) => {
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.description && Boolean(formik.errors.description)}
                                     helperText={formik.touched.description && formik.errors.description}
+                                    InputProps={{
+                                        style: { backgroundColor: '#F2FDFF' },
+                                    }}
                                 />
                                 <TextField
                                     fullWidth
@@ -80,6 +85,9 @@ const CreateTicketForm = ({ onCreate }) => {
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.type && Boolean(formik.errors.type)}
                                     helperText={formik.touched.type && formik.errors.type}
+                                    InputProps={{
+                                        style: { backgroundColor: '#F2FDFF' },
+                                    }}
                                 >
                                     <MenuItem value="Request">Request</MenuItem>
                                     <MenuItem value="Incident">Incident</MenuItem>
@@ -87,7 +95,9 @@ const CreateTicketForm = ({ onCreate }) => {
                                 <Button
                                     type="submit"
                                     fullWidth
-                                    sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2, backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}
+                                >
                                     Create Ticket
                                 </Button>
                             </form>
@@ -118,4 +128,4 @@ const CreateTicketForm = ({ onCreate }) => {
     );
 };
 
-export default CreateTicketForm;    
+export default CreateTicketForm;

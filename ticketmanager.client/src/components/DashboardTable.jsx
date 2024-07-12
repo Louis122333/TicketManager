@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, useTheme } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import useAllTickets from '../hooks/tickets/useAllTickets';
 
 const DashboardTable = () => {
     const { tickets, loading, error } = useAllTickets();
     const navigate = useNavigate();
-    const theme = useTheme();
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error loading tickets: {error}</p>;
@@ -20,13 +19,13 @@ const DashboardTable = () => {
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: theme.palette.primary.dark }}>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Number</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Title</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Status</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Priority</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Created</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Updated</TableCell>
+                    <TableRow>
+                        <TableCell>Number</TableCell>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Priority</TableCell>
+                        <TableCell>Created</TableCell>
+                        <TableCell>Updated</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

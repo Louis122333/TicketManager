@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography, useTheme } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography } from '@mui/material';
 import useUsers from '../../hooks/users/useUsers';
 import { useAuth } from '../../contexts/AuthContext';
 
 const UsersTable = () => {
     const { users, loading, error } = useUsers();
-    const theme = useTheme();
     const navigate = useNavigate();
     const { roles } = useAuth();
     const isAdministrator = roles.includes('Administrator');
@@ -24,13 +23,13 @@ const UsersTable = () => {
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
-                <TableRow sx={{ backgroundColor: theme.palette.primary.dark }}>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>ID</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>First Name</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Last Name</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Email</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Role</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Created</TableCell>
+                <TableRow>
+                        <TableCell>ID</TableCell>
+                        <TableCell>First Name</TableCell>
+                        <TableCell>Last Name</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Role</TableCell>
+                        <TableCell>Created</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

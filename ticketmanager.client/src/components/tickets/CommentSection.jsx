@@ -6,7 +6,8 @@ import { createComment, getUserDetails } from '../../services/api';
 
 const CommentSection = ({ ticketId, comments, fetchTicketDetails }) => {
     const [commentRoles, setCommentRoles] = useState({});
-     const theme = useTheme();
+    const theme = useTheme();
+
     useEffect(() => {
         if (comments) {
             const fetchCommentRoles = async () => {
@@ -65,7 +66,18 @@ const CommentSection = ({ ticketId, comments, fetchTicketDetails }) => {
                         onBlur={formik.handleBlur}
                         error={formik.touched.commentText && Boolean(formik.errors.commentText)}
                         helperText={formik.touched.commentText && formik.errors.commentText}
-                        sx={{ mt: 2, mb: 2 }}
+                        sx={{
+                            mt: 2,
+                            mb: 2,
+                            '& .MuiInputBase-root': {
+                                backgroundColor: '#F2FDFF',
+                            },
+                            '& .MuiFormHelperText-root': {
+                                margin: 0,
+                                padding: '0 14px',
+                                backgroundColor: 'inherit',
+                            },
+                        }}
                     />
                     <Button variant='contained' type="submit" sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Add Comment</Button>
                 </form>
@@ -76,7 +88,7 @@ const CommentSection = ({ ticketId, comments, fetchTicketDetails }) => {
                     <Paper key={comment.commentId} sx={{ mt: 2, p: 2, border: '1px solid #ddd', borderRadius: '4px', overflowWrap: 'break-word' }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar sx={{ mr: 2, backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText  }}>
+                                <Avatar sx={{ mr: 2, backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>
                                     {comment.createdByName ? getInitials(comment.createdByName).toUpperCase() : 'U'}
                                 </Avatar>
                                 <Box>

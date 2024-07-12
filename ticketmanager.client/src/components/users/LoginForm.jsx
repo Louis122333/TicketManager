@@ -1,7 +1,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button, Paper, Box, useTheme } from '@mui/material';
+import { TextField, Button, Box, useTheme } from '@mui/material';
+import FormContainer from '../layout/FormContainer';
 
 const LoginForm = ({ onLogin }) => {
     const validationSchema = Yup.object({
@@ -23,50 +24,53 @@ const LoginForm = ({ onLogin }) => {
     const theme = useTheme();
 
     return (
-        <Paper elevation={3} sx={{ p: 3 }}>
-            <Box
-                sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-                <form onSubmit={formik.handleSubmit} style={{ width: '100%', marginTop: '1rem' }}>
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        id="email"
-                        name="email"
-                        label="Email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
-                        helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        id="password"
-                        name="password"
-                        label="Password"
-                        type="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
-                    />
+        <FormContainer title="Login to Your Account">
+            <form onSubmit={formik.handleSubmit}>
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    id="email"
+                    name="email"
+                    label="Email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    InputProps={{
+                        style: { backgroundColor: '#F2FDFF' }
+                    }}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                    InputProps={{
+                        style: { backgroundColor: '#F2FDFF' }
+                    }}
+                />
+                <Box mt={3}>
                     <Button
-                        type="submit"
                         fullWidth
+                        type="submit"
                         variant="contained"
-                        color="primary"
-                        sx={{ mt: 3, mb: 2, backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}
+                        sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}
                     >
                         Login
                     </Button>
-                </form>
-            </Box>
-        </Paper>
+                </Box>
+            </form>
+        </FormContainer>
     );
 };
 

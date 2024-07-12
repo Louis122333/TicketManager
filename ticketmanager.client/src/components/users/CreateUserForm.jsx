@@ -1,7 +1,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button, Paper, Box, Typography, MenuItem, Select, FormControl, InputLabel, useTheme } from '@mui/material';
+import { TextField, Button, Box, MenuItem, Select, FormControl, InputLabel, useTheme } from '@mui/material';
+import FormContainer from '../layout/FormContainer';
 
 const CreateUserForm = ({ onCreate }) => {
     const validationSchema = Yup.object({
@@ -38,14 +39,11 @@ const CreateUserForm = ({ onCreate }) => {
             onCreate(values);
         },
     });
-    
+
     const theme = useTheme();
 
     return (
-        <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-                Create a New User
-            </Typography>
+        <FormContainer title="New User">
             <form onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
@@ -59,6 +57,9 @@ const CreateUserForm = ({ onCreate }) => {
                     onBlur={formik.handleBlur}
                     error={formik.touched.firstName && Boolean(formik.errors.firstName)}
                     helperText={formik.touched.firstName && formik.errors.firstName}
+                    InputProps={{
+                        style: { backgroundColor: '#F2FDFF' }
+                    }}
                 />
                 <TextField
                     fullWidth
@@ -72,6 +73,9 @@ const CreateUserForm = ({ onCreate }) => {
                     onBlur={formik.handleBlur}
                     error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                     helperText={formik.touched.lastName && formik.errors.lastName}
+                    InputProps={{
+                        style: { backgroundColor: '#F2FDFF' }
+                    }}
                 />
                 <TextField
                     fullWidth
@@ -85,6 +89,9 @@ const CreateUserForm = ({ onCreate }) => {
                     onBlur={formik.handleBlur}
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
+                    InputProps={{
+                        style: { backgroundColor: '#F2FDFF' }
+                    }}
                 />
                 <TextField
                     fullWidth
@@ -99,6 +106,9 @@ const CreateUserForm = ({ onCreate }) => {
                     onBlur={formik.handleBlur}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
+                    InputProps={{
+                        style: { backgroundColor: '#F2FDFF' }
+                    }}
                 />
                 <FormControl fullWidth margin="normal">
                     <InputLabel id="role-label">Role</InputLabel>
@@ -110,6 +120,18 @@ const CreateUserForm = ({ onCreate }) => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         error={formik.touched.role && Boolean(formik.errors.role)}
+                        sx={{
+                            backgroundColor: '#F2FDFF',
+                            '& .MuiOutlinedInput-root': {
+                                backgroundColor: '#F2FDFF',
+                            },
+                            '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: theme.palette.primary.main,
+                            },
+                            '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
+                                borderColor: theme.palette.error.main,
+                            },
+                        }}
                     >
                         <MenuItem value="Guest">Guest</MenuItem>
                         <MenuItem value="HelpDesk">HelpDesk</MenuItem>
@@ -117,12 +139,17 @@ const CreateUserForm = ({ onCreate }) => {
                     </Select>
                 </FormControl>
                 <Box mt={3}>
-                    <Button fullWidth type="submit" variant='contained' sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>
+                    <Button
+                        fullWidth
+                        type="submit"
+                        variant="contained"
+                        sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}
+                    >
                         Create User
                     </Button>
                 </Box>
             </form>
-        </Paper>
+        </FormContainer>
     );
 };
 

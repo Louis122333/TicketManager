@@ -1,17 +1,17 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Select, MenuItem, Button, Paper, useTheme, TextField } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Select, MenuItem, Button, Paper, TextField } from '@mui/material';
 
 const TicketDetailTable = ({ ticket, status, setStatus, priority, setPriority, handleStatusUpdate, handlePriorityUpdate, handleSelfAssign, userRoles, createdBy, assignedTo }) => {
     const isGuest = userRoles.includes('Guest');
-    const theme = useTheme();
+
     return (
         <TableContainer component={Paper} sx={{ width: '100%' }}>
             <Table>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: theme.palette.primary.dark }}>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Field</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Value</TableCell>
-                        {!isGuest && <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Action</TableCell>}
+                    <TableRow>
+                        <TableCell>Field</TableCell>
+                        <TableCell>Value</TableCell>
+                        {!isGuest && <TableCell>Action</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -42,7 +42,7 @@ const TicketDetailTable = ({ ticket, status, setStatus, priority, setPriority, h
                             )}
                         </TableCell>
                         {!isGuest && <TableCell>
-                            <Button variant='contained' sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }} onClick={handleStatusUpdate}>Update</Button>
+                            <Button variant='contained' onClick={handleStatusUpdate}>Update</Button>
                         </TableCell>}
                     </TableRow>
                     <TableRow>
@@ -76,7 +76,7 @@ const TicketDetailTable = ({ ticket, status, setStatus, priority, setPriority, h
                                 </Select>
                             </TableCell>
                             <TableCell>
-                                <Button variant='contained' sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }} onClick={handlePriorityUpdate}>Update</Button>
+                                <Button variant='contained' onClick={handlePriorityUpdate}>Update</Button>
                             </TableCell>
                         </TableRow>
                     )}
@@ -88,7 +88,7 @@ const TicketDetailTable = ({ ticket, status, setStatus, priority, setPriority, h
                     <TableRow>
                         <TableCell>Assigned To</TableCell>
                         <TableCell>{assignedTo}</TableCell>
-                        {!isGuest && <TableCell><Button variant='contained' sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }} onClick={handleSelfAssign}>Assign Me</Button></TableCell>}
+                        {!isGuest && <TableCell><Button variant='contained' onClick={handleSelfAssign}>Assign Me</Button></TableCell>}
                     </TableRow>
                     <TableRow>
                         <TableCell>Created At</TableCell>

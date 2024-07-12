@@ -60,7 +60,7 @@ const TicketDetailPage = () => {
 
     return (
         <Container maxWidth="md">
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ mt: 8 }}>
                 <PageTitle title="Ticket Details" />
                 <TicketDetailTable
                     ticket={ticket}

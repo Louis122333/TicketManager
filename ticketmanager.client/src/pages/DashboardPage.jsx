@@ -14,7 +14,7 @@ const DashboardPage = () => {
 
     return (
         <Container maxWidth="lg">
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ mt: 8 }}>
                 <Typography variant="h4" sx={{ mb: 4 }}>Dashboard</Typography>
                 {isAdmin && (
                     <Box sx={{ mb: 4 }}>

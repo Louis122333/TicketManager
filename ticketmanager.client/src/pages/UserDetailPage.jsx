@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, CircularProgress, Select, MenuItem, Button, Paper, TextField } from '@mui/material';
+import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import { getUserDetails, updateUser } from '../services/api';
 import PageTitle from '../components/layout/PageTitle';
 import { useAuth } from '../contexts/AuthContext';
+import UserDetailForm from '../components/users/UserDetailForm';
 
 const UserDetailPage = () => {
     const { userId } = useParams();
@@ -38,22 +39,13 @@ const UserDetailPage = () => {
         fetchUserDetails();
     }, [userId]);
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (updatedRole) => {
         try {
-            await updateUser(userId, role);
+            await updateUser(userId, updatedRole);
             navigate('/dashboard');
         } catch (err) {
             setError(err.message);
         }
-    };
-
-    const renderRoleOptions = () => {
-        const roles = ["Administrator", "HelpDesk", "Guest"];
-        return roles.map((role) => (
-            <MenuItem key={role} value={role}>
-                {role}
-            </MenuItem>
-        ));
     };
 
     if (!isAdministrator) {
@@ -65,48 +57,16 @@ const UserDetailPage = () => {
 
     return (
         <Container maxWidth="md">
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ mt: 8 }}>
                 <PageTitle title="User Details" />
-                <Paper elevation={3} sx={{ p: 3 }}>
-                    <Typography variant="h6" gutterBottom>Update {user.fullName}</Typography>
-                    <TextField
-                        fullWidth
-                        margin="dense"
-                        variant="outlined"
-                        label="Full Name"
-                        value={user.fullName}
-                        InputProps={{
-                            readOnly: true,
-                        }}
+                {user && (
+                    <UserDetailForm
+                        user={user}
+                        role={role}
+                        onRoleChange={setRole}
+                        onUpdate={handleUpdate}
                     />
-                    <TextField
-                        fullWidth
-                        margin="dense"
-                        variant="outlined"
-                        label="Email"
-                        value={user.email}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    />
-                    <Select
-                        fullWidth
-                        margin="dense"
-                        variant="outlined"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                    >
-                        {renderRoleOptions()}
-                    </Select>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleUpdate}
-                        sx={{ mt: 2 }}
-                    >
-                        Update User
-                    </Button>
-                </Paper>
+                )}
             </Box>
         </Container>
     );
