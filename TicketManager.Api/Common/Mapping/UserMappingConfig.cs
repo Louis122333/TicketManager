@@ -16,10 +16,13 @@ namespace TicketManager.Api.Common.Mapping
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Role, src => src.Role.ToString());
 
-            config.NewConfig<IReadOnlyList<User>, IReadOnlyList<UserResponse>>();
-
-            config.NewConfig<UpdateUserRequest, UpdateUserCommand>()
-            .Map(dest => dest.UserId, src => Guid.Empty);
+            config.NewConfig<User, UserDetailedResponse>()
+                .Map(dest => dest.UserId, src => src.Id.Value.ToString())
+                .Map(dest => dest.FirstName, src => src.FirstName)
+                .Map(dest => dest.LastName, src => src.LastName)
+                .Map(dest => dest.Email, src => src.Email)
+                .Map(dest => dest.Role, src => src.Role.ToString())
+                .Map(dest => dest.CreatedDate, src => src.CreatedDate.ToLocalTime());
         }
     }
 }

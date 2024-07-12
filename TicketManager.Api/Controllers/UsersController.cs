@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TicketManager.Application.Tickets.Queries.GetTicketById;
+using System.Security.Claims;
 using TicketManager.Application.Users.Commands.Create;
 using TicketManager.Application.Users.Commands.Update;
 using TicketManager.Application.Users.Queries.GetAllUsers;
@@ -33,7 +33,7 @@ namespace TicketManager.Api.Controllers
             var result = await _mediator.Send(query);
 
             return result.Match(
-                users => Ok(_mapper.Map<IReadOnlyList<UserResponse>>(users)),
+                users => Ok(_mapper.Map<IReadOnlyList<UserDetailedResponse>>(users)),
                 Problem);
         }
 
@@ -83,12 +83,15 @@ namespace TicketManager.Api.Controllers
                 return BadRequest("Invalid user role");
             }
 
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (currentUserId == userId.ToString())
+            {
+                return BadRequest("You cannot change your own role.");
+            }
+
             var command = new UpdateUserCommand(
                 UserId: userId,
-                FirstName: request.FirstName,
-                LastName: request.LastName,
-                Email: request.Email,
-                Password: request.Password,
                 Role: userRole.ToString());
 
             var result = await _mediator.Send(command);
