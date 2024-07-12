@@ -13,7 +13,6 @@ const useUserTickets = () => {
             const fetchTickets = async () => {
                 try {
                     const data = await getUserTickets();
-                    console.log('Fetched tickets:', data); // Log fetched tickets
                     setTickets(data);
                 } catch (err) {
                     setError(err.message);

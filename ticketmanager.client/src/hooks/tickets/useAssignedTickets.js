@@ -12,7 +12,9 @@ const useAssignedTickets = () => {
                 const data = await getAssignedTickets();
                 setTickets(data);
             } catch (err) {
-                setError(err.message);
+                if (err.response && err.response.status !== 404) {
+                    setError(err.message);
+                }
             } finally {
                 setLoading(false);
             }

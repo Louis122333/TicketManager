@@ -1,14 +1,13 @@
 import React from 'react';
 import useCreateTicket from '../hooks/tickets/useCreateTicket';
-import CreateTicket from '../components/CreateTicket';
-import PageTitle from '../components/PageTitle';
+import CreateTicketForm from '../components/tickets/CreateTicketForm';
 
 const CreateTicketPage = () => {
-    const { handleCreateTicket, error } = useCreateTicket();
+    const { handleCreateTicket } = useCreateTicket();
 
     return (
         <>
-            <CreateTicket onCreate={handleCreateTicket} />
+            <CreateTicketForm onCreate={handleCreateTicket} />
         </>
     );
 };

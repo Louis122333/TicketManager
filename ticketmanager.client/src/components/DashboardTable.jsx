@@ -20,13 +20,13 @@ const DashboardTable = () => {
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: theme.palette.primary.main }}>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Number</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Title</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Status</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Priority</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Created</TableCell>
-                        <TableCell sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}>Updated</TableCell>
+                    <TableRow sx={{ backgroundColor: theme.palette.primary.dark }}>
+                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Number</TableCell>
+                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Title</TableCell>
+                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Status</TableCell>
+                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Priority</TableCell>
+                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Created</TableCell>
+                        <TableCell sx={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText }}>Updated</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

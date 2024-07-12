@@ -13,12 +13,12 @@ export const AuthProvider = ({ children }) => {
 
     const login = (token) => {
         try {
-            console.log("Logging in with token:", token);
             const decodedToken = jwtDecode(token);
-            console.log("Decoded token:", decodedToken);
-
+            
             const user = {
                  email: decodedToken.email,
+                 firstName: decodedToken.given_name, 
+                 lastName: decodedToken.family_name,
                 };
             const roleClaimKey = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
             const roles = decodedToken[roleClaimKey] || [];
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = sessionStorage.getItem('token');
         if (token) {
-            console.log("Found token in sessionStorage:", token);
+            console.log("Found token in sessionStorage.");
             login(token);
         } else {
             setAuthState((prevState) => ({ ...prevState, isInitialized: true }));
