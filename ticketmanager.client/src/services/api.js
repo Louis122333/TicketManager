@@ -36,7 +36,9 @@ export const login = async (email, password) => {
   }
 
   const data = await response.json();
-  console.log('Login response:', data);
+
+  console.log('Login successful');
+
   return data;
 };
 
@@ -46,11 +48,11 @@ export const register = async (email, password, firstName, lastName) => {
       headers: getHeaders(),
       body: JSON.stringify({ email, password, firstName, lastName }),
   });
+  
   return handleResponse(response);
 };
 
 // Tickets
-
 export const getAllTickets = async () => {
   const response = await fetch(`${API_BASE_URL}/tickets`, {
       method: 'GET',
@@ -73,10 +75,13 @@ export const createTicket = async (title, description, type) => {
       headers: getHeaders(),
       body: JSON.stringify({ title, description, type }),
   });
+  
+  console.log('Ticket created successfully');
+
   return handleResponse(response);
 };
 
-export const getTicketDetails = async (ticketId) => {
+export const  getTicketDetails = async (ticketId) => {
   const response = await fetch(`${API_BASE_URL}/tickets/${ticketId}/details`, {
       method: 'GET',
       headers: getHeaders(),
@@ -88,7 +93,6 @@ export const getTicketDetails = async (ticketId) => {
   }
 
   const data = await response.json();
-  console.log('API - getTicketDetails response:', data);
   return data;
 };
 
@@ -98,6 +102,9 @@ export const createComment = async (ticketId, text) => {
       headers: getHeaders(),
       body: JSON.stringify({ text }),
   });
+  
+  console.log('Comment created successfully');
+
   return handleResponse(response);
 };
 
@@ -113,7 +120,7 @@ export const assignToUser = async (ticketId) => {
   }
 
   const data = await response.json();
-  console.log('API - assignToUser response:', data);
+  console.log('Ticket assigned successfully');
   return data;
 };
 
@@ -123,6 +130,8 @@ export const updateTicketStatus = async (ticketId, status) => {
       headers: getHeaders(),
       body: JSON.stringify({ status }),
   });
+
+  console.log('Ticket status updated successfully');
 
   return handleResponse(response);
 };
@@ -134,6 +143,8 @@ export const updateTicketPriority = async (ticketId, priority) => {
       body: JSON.stringify({ priority }),
   });
 
+  console.log('Ticket priority updated successfully');
+
   return handleResponse(response);
 };
 
@@ -142,10 +153,38 @@ export const getAssignedTickets = async () => {
       method: 'GET',
       headers: getHeaders(),
   });
+
+  if (!response.ok) {
+      if (response.status === 404) {
+          return [];
+      } else {
+          throw new Error('Failed to fetch assigned tickets');
+      }
+  }
+
   return handleResponse(response);
 };
 
 // Users
+export const createUser = async (userData) => {
+  const response = await fetch(`${API_BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+          ...getHeaders(),
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+  });
+
+  if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to create user');
+  }
+
+  console.log('User created successfully');
+
+  return await response.json();
+};
 
 export const getAllUsers = async () => {
   const response = await fetch(`${API_BASE_URL}/users`, {
@@ -164,17 +203,35 @@ export const getAllUsers = async () => {
 
 export const getUserDetails = async (userId) => {
   const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
-    method: 'GET',
-    headers: getHeaders(),
+      method: 'GET',
+      headers: getHeaders(),
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to fetch user details');
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch user details');
   }
 
   const data = await response.json();
-  console.log('API - getUserDetails response:', data); 
   return data;
 };
 
+export const updateUser = async (userId, role) => {
+  const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+          ...getHeaders(),
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ role }),
+  });
+
+  if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update user');
+  }
+
+  console.log('User updated successfully');
+
+  return await response.json();
+};
