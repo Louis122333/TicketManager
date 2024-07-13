@@ -88,7 +88,7 @@ namespace TicketManager.Infrastructure.Persistence.Data
             {
                 (ReferenceNumber.CreateIncident(),
                 "Unable to Contact Manager by Email",
-                "I am unable to contact your Help Desk Manager by email through Outlook on my mobile device. Immediate assistance is required as this is impacting my ability work.",
+                "I am unable to contact your Help Desk Manager by email through Outlook on my mobile device. Immediate assistance is required as this is affecting my work.",
                 TicketType.Incident,
                 UserId.Create(karenUser.Id.Value)),
 
