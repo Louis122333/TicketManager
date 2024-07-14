@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import useAllTickets from '../hooks/tickets/useAllTickets';
-import { getUserDetails } from '../services/api'; // Assuming you have this function to fetch user details
+import { getUserDetails } from '../services/api';
 
 const DashboardTable = () => {
     const { tickets, loading, error } = useAllTickets();
